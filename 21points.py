@@ -4,16 +4,16 @@ cards = [1,2,3,4,5,6,7,8,9,10,11]
 computer = []
 player = []
 
-#draw card
+
 def draw_card(p=player):
     x = random.choice(cards)
     cards.remove(x)
     p.append(x)
     x = random.choice(cards)
 
-#game
-def start_game():
-    time.sleep(5)
+
+def start_game(user_name):
+    time.sleep(3)
     print('READY?')
     time.sleep(1)
     print('SET,')
@@ -21,27 +21,36 @@ def start_game():
     print('GO!')
     time.sleep(1)
     n = 0
+
+
     while n <= 1:
         draw_card()
         draw_card(computer)
         n = n + 1
+
+
     print("computer's card: **",computer[1:])
     print('='*100)
-    print('your card:',player[0:])
+    print(user_name,':',player)
     player_input = input('Do you want to draw card? -(Yes or No)')
-    while sum(computer) <= 16 or player_input == 'Yes':
+    while sum(computer) <= 16 or (player_input == 'Yes' and sum(player) < 21):
         if sum(computer) <= 16:
             draw_card(computer)
             print('computer draws a card')
             print("computer's card: **", computer[1:])
         elif player_input == 'Yes':
             draw_card()
-            print('your card:', player[0:])
+            print(user_name,':',player)
             player_input = input('Do you want to draw card? -(Yes or No)')
+
+
     print('Show cards!')
-    print("computer's card:",computer[0:])
+    print("computer's card:",computer)
     print('='*100)
-    print('your card:',player[0:])
+    print(user_name,':',player)
+
+
+    # whether player win or not
     if sum(computer) <= 21 and sum(player) <= 21:
         if sum(computer) < sum(player):
             print('YOU WIN!')
@@ -60,5 +69,7 @@ def start_game():
         print('YOU WIN!')
     else:
         print('YOU LOSE!')
+
+
 print("21点游戏:每轮你可以选择抽牌或不抽，最后点数最接近且不超过21的胜利（牌堆里有1到11的牌且每种牌只有一张）")
-start_game()
+start_game('TBZmang')
