@@ -69,6 +69,7 @@ def start_game(user_name):
         print('YOU WIN!')
     else:
         print('YOU LOSE!')
+    print("Thanks for playing and thank dusmart's help!")
 
 
 print("21点游戏:每轮你可以选择抽牌或不抽，最后点数最接近且不超过21的胜利（牌堆里有1到11的牌且每种牌只有一张）")
