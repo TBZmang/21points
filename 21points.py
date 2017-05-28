@@ -1,6 +1,6 @@
 import random
 import time
-put_back = 1
+put_back = 0
 points = 0
 bombs = 0
 started = False
