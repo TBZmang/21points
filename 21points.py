@@ -1,18 +1,19 @@
 import random
 import time
-put_back = 0
+put_back = 1
 points = 0
 bombs = 0
+started = False
 
 
 def start_game(user_name):
     global points
     global put_back
     global bombs
+    global started
     cards = [i for i in range(1, 12)]
     player = []
     computer = []
-    started = False
     if not started:
         print("21点游戏:每轮你可以选择抽牌或不抽，最后点数最接近且不超过21的胜利（牌堆里有1到11的牌且每种牌只有一张）")
         time.sleep(3)
@@ -33,12 +34,12 @@ def start_game(user_name):
 
     def put_card_back(p=player):
         cards.append(p[-1])
-        p = p[:-1]
+        p.remove(p[-1])
 
 
     def blow_up(p=computer):
         cards.append(p[-1])
-        p = p[:-1]
+        p.remove(p[-1])
 
 
     def buy_bomb():
@@ -49,6 +50,8 @@ def start_game(user_name):
             if points >= 2000:
                 points = points - 2000
                 bombs = bombs + 1
+                print('You have',points,'points')
+                buy_bomb()
             else:
                 print('Your points is not enough!')
         elif InputResult == 'No':
@@ -63,6 +66,8 @@ def start_game(user_name):
             if points >= 1500:
                 points = points - 1500
                 put_back = put_back + 1
+                print('You have',points,'points')
+                buy_bonus()
             else:
                 print('Your points is not enough!')
         elif InputResult == 'No':
@@ -76,40 +81,43 @@ def start_game(user_name):
 
 
     #draw card and put back
-    print("computer's card: **",computer[1:])
+    print("computer's card: **",computer[1:],'the sum of them are(not with hided num)',sum(computer[1:]))
     print()
     print('='*100)
     print()
-    print(user_name,':',player)
+    print(user_name+'\'s card:',player,'the sum of them are',sum(player))
     player_input = input('Do you want to draw card? -(Yes,No,putBack or bomb)')
     while ((sum(computer) <= 16 or player_input == 'Yes') or player_input == 'putBack') or player_input == 'bomb':
         if sum(computer) <= 16:
             draw_card(computer)
             print('computer draws a card')
-            print("computer's card: **", computer[1:])
+            print("computer's card: **",computer[1:],'the sum of them are(not with hided num)',sum(computer[1:]))
         elif player_input == 'Yes':
             draw_card()
-            print(user_name,':',player)
+            print(user_name+'\'s card:',player,'the sum of them are',sum(player))
             player_input = input('Do you want to draw card? -(Yes,No or putBack)')
         elif player_input == 'putBack':
             if put_back > 0:
                 put_card_back()
                 put_back = put_back - 1
+                print(user_name+'\'s card:',player,'the sum of them are',sum(player))
             else:
                 'You haven\'t any put-backs left!'
         elif player_input == 'bomb':
             if bombs > 0:
                 blow_up()
                 bombs = bombs - 1
+                print("computer's card: **",computer[1:],'the sum of them are(not with hided num)',sum(computer[1:]))
+                print()
             else:
                 'You haven\'t any bombs left!'
 
 
 
     print('Show cards!')
-    print("computer's card:",computer)
+    print("computer's card:",computer,'the sum of them are',sum(computer))
     print('='*100)
-    print(user_name,':',player)
+    print(user_name+'\'s card:',player,'the sum of them are',sum(player))
 
 
     # whether player win or not
